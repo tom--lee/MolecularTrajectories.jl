@@ -1,7 +1,7 @@
 module AtomTrajectories
 
 export Trajectory, Frame
-export gettime, settime!, getbox, setbox!, getnumatoms
+export gettime, settime!, getbox, setbox!, getnumatoms, getpositions
 export getframe, advance!
 
 using SimulationBoxes
@@ -28,6 +28,8 @@ getnumatoms(f::Frame) = size(f.positions,1)
 
 Base.getindex(f::Frame, atomid::Integer) = f.positions[atomid]
 Base.setindex!{V}(f::Frame{V}, pos, atomid::Integer) = f.positions[atomid] = pos
+
+getpositions(f::Frame) = f.positions
 
 gettime(f::Frame) = f.time
 settime!(f::Frame, value) = f.time = value
