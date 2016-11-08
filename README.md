@@ -1,4 +1,4 @@
-#AtomTrajectories.jl
+# AtomTrajectories.jl
 
 Extendable interface for handling molecular simulation trajectories.
 
