@@ -39,6 +39,36 @@ box2 = Box(Vec(10.0,20.0,30.0))
 setbox!(frame, box2)
 @test getbox(frame) == box2
 
+#define a dummy trajectory type
+
+type Traj <: Trajectory{Frame{Vec,Box}}
+    frameno::Int
+    Traj() = new(0)
+end 
+
+const NUMITER = 2
+
+AtomTrajectories.getframe!(traj::Traj) = begin
+    traj.frameno += 1
+    Frame{Vec,Box}(traj.frameno, box, 10+traj.frameno)
+end
+
+AtomTrajectories.hasframe(traj::Traj) = traj.frameno < NUMITER
+
+Base.eltype(::Type{Traj}) = Frame{Vec,Box}
+
+@test eltype(Traj) == Frame{Vec,Box}
+
+@testset "Test Trajectory Iteration" begin
+    traj = Traj()
+    
+    for (i,frame) in enumerate(traj)
+        @test traj.frameno == i
+        @test getnumatoms(frame) == 10+traj.frameno
+        @test isa(frame, Frame{Vec,Box})
+    end
+    @test traj.frameno == NUMITER
+end
 
 
 end #module

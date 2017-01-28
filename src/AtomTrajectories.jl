@@ -3,11 +3,9 @@ module AtomTrajectories
 export Trajectory, Frame
 export gettime, settime!, getbox, setbox!, setorigin!
 export getnumatoms, getpositions, shiftpositions!
-export getframe, advance!
+export getframe!, hasframe
 
 using SimulationBoxes
-
-abstract Trajectory
 
 """
 Holds one frame of a trajectory, including atom positions, 
@@ -22,8 +20,19 @@ type Frame{V,B<:SimulationBox}
     end
 end
 
-function getframe(::Trajectory); end
-function advance!(::Trajectory); end
+abstract Trajectory{F<:Frame}
+
+function getframe! end
+function hasframe end
+
+Base.start(tr::Trajectory) = nothing
+Base.next(tr::Trajectory, state) = (getframe!(tr), nothing)
+Base.done(tr::Trajectory, state) = !hasframe(tr)
+Base.iteratorsize(::Trajectory) = Base.SizeUnknown()
+Base.iteratoreltype{T<:Trajectory}(::Type{T}) = Base.HasEltype()
+Base.eltype{T<:Trajectory}(::Type{T}) = error("Must define method eltype(::Type{$T})")
+# in Julia 0.6:
+# Base.eltype{F, T<:Trajectory{F}}(::Type{T{F}}) = F # or something similar
 
 getnumatoms(f::Frame) = size(f.positions,1)
 
