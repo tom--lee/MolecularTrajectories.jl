@@ -1,0 +1,8 @@
+name = "MolecularTrajectories"
+uuid = "9b3b1fbe-9008-11e8-0ccd-753221acf4a0"
+authors = ["Tom Lee <contact@tomlee.com.au>"]
+version = "1.0.0"
+
+[deps]
+SimulationBoxes = "bfdac0e2-856b-11e8-2054-fde3304e454a"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
