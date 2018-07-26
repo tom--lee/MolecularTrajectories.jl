@@ -3,7 +3,7 @@ export XTC, GroBox
 
 include("XTC_JB.jl")
 
-xjb = Xtc_JB
+const xjb = Xtc_JB
 const GroBox{V} = Box{V,3,(true,true,true)}
 
 struct XTC{V} <: AbstractTrajectory{Frame{V}}
