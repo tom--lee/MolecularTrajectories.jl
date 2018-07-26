@@ -1,3 +1,6 @@
+
+__precompile__()
+
 module MolecularTrajectories
 
 export AbstractTrajectory, AbstractFrame

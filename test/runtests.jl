@@ -29,7 +29,7 @@ time2 = -12.1
 
 testfile = "test.xtc"
 
-xtc = XTC{Vec}(testfile)
+xtc = XTC{Vec}(testfile, testfile)
 for a_frame in xtc
     @test a_frame.time > -1 #dummy test
 end
