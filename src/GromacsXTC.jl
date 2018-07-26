@@ -1,5 +1,6 @@
 
 export XTC, GroBox
+export GroTrajectory
 
 include("XTC_JB.jl")
 
@@ -32,6 +33,44 @@ function Base.iterate(xtc::XTC{V}, state=0) where V
         box = GroBox{V}((box_a, box_b, box_c))
 
         ( Frame{V}(time, box, positions), state+1 )
+    end
+end
+
+struct GroTrajectory{V} <: AbstractTrajectory{Frame{V}}
+    filenames::Vector{String}
+    dt::Float64
+    function GroTrajectory{V}(
+        filenames::String...
+        ;
+        dt=0.0
+    ) where V
+        new{V}(filenames, dt)
+    end
+end
+
+function gro_frame(io::IO, ::Type{V}, time = 0.0) where V
+    lines = readlines(io)
+    positions = map(@view(lines[3:end-1])) do line
+        V(
+            parse(Float64, line[21:28]),
+            parse(Float64, line[29:36]),
+            parse(Float64, line[37:44]),
+        )
+    end
+    sides = V( map(x->parse(Float64, x), split(lines[end]))..., )
+    Frame{V}(time, Box(sides), positions)
+end
+
+function Base.iterate(gro::GroTrajectory{V}, state=0) where V
+    if state+1>length(gro.filenames)
+        nothing
+    else
+        open(gro.filenames[state+1]) do f
+            (
+                gro_frame(f, V, (state+1)*gro.dt),
+                state+1,
+            )
+        end
     end
 end
 

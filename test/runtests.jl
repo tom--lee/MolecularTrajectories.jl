@@ -25,12 +25,20 @@ time2 = -12.1
 
 #define a dummy trajectory type
 
-@warn "Tests only check that trajectory can be read without runs without crashing"
+@warn "Tests only check that XTC trajectory can be read without runs without crashing"
 
 testfile = "test.xtc"
 
 xtc = XTC{Vec}(testfile)
 for a_frame in xtc
     @test a_frame.time > -1 #dummy test
+end
+
+grofile = "test.gro"
+gro = GroTrajectory{Vec}(grofile, grofile, grofile, dt = 10)
+
+for (i,a_frame) in enumerate(gro)
+    @test a_frame.time == i*10
+    @test a_frame.positions[1] == Vec(0.071, 8.301, 0.000)
 end
 
