@@ -15,12 +15,12 @@ julia> gro_path = joinpath(dirname(pathof(MolecularTopologies)), "../test/test.g
 
 julia> gro_paths = [gro_path, gro_path]
 
-julia> trajectory = GroTrajectory(gro_paths)
+julia> trajectory = GroTrajectory(gro_paths, dt=1.0)
 
 julia> for frame in trajectory
     @show frame.time
     @show frame.box
-    @show trajectory.positions
+    @show frame.positions
 end
 ```
 
