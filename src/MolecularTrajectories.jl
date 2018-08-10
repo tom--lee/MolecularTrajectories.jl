@@ -5,7 +5,7 @@ export AbstractTrajectory, AbstractFrame
 export Trajectory, Frame
 export get_num_atoms
 
-using SimulationBoxes
+using MolecularBoxes
 
 abstract type AbstractFrame{V} end
 abstract type AbstractTrajectory{F<:AbstractFrame} end

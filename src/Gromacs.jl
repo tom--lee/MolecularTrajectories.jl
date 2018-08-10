@@ -1,5 +1,5 @@
 
-export XTC, GroBox
+#export XTC, GroBox
 export GroTrajectory
 
 include("XTC_JB.jl")
@@ -9,13 +9,15 @@ const GroBox{V} = Box{V,3,(true,true,true)}
 
 struct XTC{V} <: AbstractTrajectory{Frame{V}}
     xtcjb::Vector{xjb.xtcType}
-    function XTC{V}(filenames::String...) where V
+    function XTC{V}(filenames) where V
         #stat, xtcjb = xjb.xtc_init(filename)
         new{V}(
             [ last(xjb.xtc_init(filename)) for filename in filenames ]
         )
     end
 end
+
+XTC{V}(filenames::String...) = XTC{V}(filenames)
 
 function Base.iterate(xtc::XTC{V}, state=1) where V
     nextstate = state
@@ -42,15 +44,19 @@ function Base.iterate(xtc::XTC{V}, state=1) where V
 end
 
 struct GroTrajectory{V} <: AbstractTrajectory{Frame{V}}
-    filenames::Vector{String}
+    filenames::Vector{String};
     dt::Float64
     function GroTrajectory{V}(
-        filenames::String...
+        filenames
         ;
         dt=0.0
     ) where V
-        new{V}(filenames, dt)
+        new{V}(collect(filenames), dt)
     end
+end
+
+function GroTrajectory{V}(filenames::String...; dt=0.0) 
+    GroTrajectory{V}(filenames, dt=dt)
 end
 
 function gro_frame(io::IO, ::Type{V}, time = 0.0) where V

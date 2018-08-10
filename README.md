@@ -1,5 +1,28 @@
 # MolecularTrajectories.jl
 
-Extendable interface for handling molecular simulation trajectories.
+A Julia package for reading molecular dynamics trajectories.
 
-Supports XTC file.
+Currently supports iteration over a series of GROMACS-format `.gro` files.
+
+GROMACS-format `.xtc` files will be supported in a future release.
+
+## Usage
+
+```julia
+julia> using MolecularTrajectories
+
+julia> gro_path = joinpath(dirname(pathof(MolecularTopologies)), "../test/test.gro")
+
+julia> gro_paths = [gro_path, gro_path]
+
+julia> trajectory = GroTrajectory(gro_paths)
+
+julia> for frame in trajectory
+    @show frame.time
+    @show frame.box
+    @show trajectory.positions
+end
+```
+
+Note that trajectory objects are iterable but not indexable.
+They do not support the `AbstractArray` interface.
