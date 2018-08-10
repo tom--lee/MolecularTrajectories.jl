@@ -1,6 +1,6 @@
 # MolecularTrajectories.jl
 
-A Julia package for reading molecular dynamics trajectories.
+A Julia package for reading molecular dynamics simulation trajectories.
 
 Currently supports iteration over a series of GROMACS-format `.gro` files.
 
