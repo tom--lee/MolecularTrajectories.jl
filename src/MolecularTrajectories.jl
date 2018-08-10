@@ -1,6 +1,4 @@
 
-__precompile__()
-
 module MolecularTrajectories
 
 export AbstractTrajectory, AbstractFrame
@@ -27,6 +25,6 @@ Base.eltype(
 
 get_num_atoms(f::Frame) = size(f.positions,1)
 
-include("GromacsXTC.jl")
+include("Gromacs.jl")
 
 end
