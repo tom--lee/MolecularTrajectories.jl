@@ -41,11 +41,11 @@ gro = GroTrajectory{Vec}([grofile, grofile, grofile], dt = 10)
 for (i,a_frame) in enumerate(gro)
     @test a_frame.time == i*10
     @test a_frame.positions[1] == Vec(0.071, 8.301, 0.000)
-    @test a_frame.positions[30000] == Vec(1.744, 5.789, 19.704)
+    @test a_frame.positions[29998] == Vec(1.744, 5.789, 19.704)
     @test a_frame.positions[end] == Vec(2.587, 0.535, 9.567)
     @test length(a_frame.positions) == 62322
-    @test a_frame.box == Box{Vec,3,(true,true,true)}(
-        Vec(8.52000   8.36230  37.00000)
+    @test a_frame.box == Box(
+        Vec(8.52000,  8.36230, 37.00000)
     )
 end
 
