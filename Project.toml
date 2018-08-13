@@ -1,7 +1,7 @@
 name = "MolecularTrajectories"
 uuid = "9b3b1fbe-9008-11e8-0ccd-753221acf4a0"
 authors = ["Tom Lee <contact@tomlee.com.au>"]
-version = "2.0.0-DEV"
+version = "2.0.0"
 
 [deps]
 MolecularBoxes = "aea3f91d-3b18-5712-a377-5bd7ed4ed15b"
