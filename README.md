@@ -1,5 +1,8 @@
 # MolecularTrajectories.jl
 
+[![Build Status](https://travis-ci.org/tom--lee/MolecularTrajectories.jl.svg?branch=master)](https://travis-ci.org/tom--lee/MolecularTrajectories.jl)
+[![Coverage Status](https://coveralls.io/repos/tom--lee/MolecularTrajectories.jl/badge.svg?branch=master)](https://coveralls.io/r/tom--lee/MolecularTrajectories.jl?branch=master)
+
 A Julia package for reading molecular dynamics simulation trajectories.
 
 Currently supports iteration over a series of GROMACS-format `.gro` files.
