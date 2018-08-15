@@ -14,7 +14,7 @@ GROMACS-format `.xtc` files will be supported in a future release.
 ```julia
 julia> using MolecularTrajectories
 
-julia> gro_path = joinpath(dirname(pathof(MolecularTopologies)), "../test/test.gro")
+julia> gro_path = joinpath(dirname(pathof(MolecularTrajectories)), "../test/test.gro")
 
 julia> gro_paths = [gro_path, gro_path]
 
