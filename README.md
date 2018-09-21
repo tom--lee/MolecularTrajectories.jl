@@ -14,16 +14,20 @@ GROMACS-format `.xtc` files will be supported in a future release.
 ```julia
 julia> using MolecularTrajectories
 
+julia> using StaticArrays
+
+julia> const Vec = SVector{3, Float64}
+
 julia> gro_path = joinpath(dirname(pathof(MolecularTrajectories)), "../test/test.gro")
 
 julia> gro_paths = [gro_path, gro_path]
 
-julia> trajectory = GroTrajectory(gro_paths, dt=1.0)
+julia> trajectory = GroTrajectory{Vec}(gro_paths, dt=1.0)
 
 julia> for frame in trajectory
     @show frame.time
     @show frame.box
-    @show frame.positions
+    @show frame.positions[1:10]
 end
 ```
 
