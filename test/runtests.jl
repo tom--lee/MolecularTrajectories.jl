@@ -10,7 +10,7 @@ time = 99.9
 numatoms = 8
 box = Box(Vec(1.0,2.0,3.0))
 test_pos = [Vec(i,i+1,i-1) for i in 1:numatoms]
-frame = Frame{Vec}(time, box, test_pos)
+frame = Frame{Vec}(time, box, test_pos, Vec[])
 
 @test get_num_atoms(frame) == numatoms
 
@@ -54,4 +54,5 @@ gro = GroTrajectory{Vec}(grofile, grofile, grofile, dt = 10)
 for (i,a_frame) in enumerate(gro)
     @test a_frame.time == i*10
     @test a_frame.positions[1] == Vec(0.071, 8.301, 0.000)
+    @test a_frame.velocities[3489] == Vec(0.0853, 0.6458, 0.2153)
 end

@@ -38,7 +38,7 @@ function Base.iterate(xtc::XTC{V}, state=1) where V
     box_c = V(bx[1,3],bx[2,3],bx[3,3])
     box = Box{V,3(true,true,true)}((box_a, box_b, box_c))
 
-    ( Frame{V}(time, box, positions), nextstate )
+    ( Frame{V}(time, box, positions, V[]), nextstate )
     
 end
 
@@ -67,8 +67,19 @@ function gro_frame(io::IO, ::Type{V}, time = 0.0) where V
             parse(Float64, line[37:44]),
         )
     end
+    velocities = if 67 < length(lines[3])
+        map(@view(lines[3:end-1])) do line
+            V(
+                parse(Float64, line[45:52]),
+                parse(Float64, line[53:60]),
+                parse(Float64, line[61:68]),
+            )
+        end
+    else
+        V[]
+    end
     sides = V( map(x->parse(Float64, x), split(lines[end]))..., )
-    Frame{V}(time, Box(sides), positions)
+    Frame{V}(time, Box(sides), positions, velocities)
 end
 
 function Base.iterate(gro::GroTrajectory{V}, state=0) where V

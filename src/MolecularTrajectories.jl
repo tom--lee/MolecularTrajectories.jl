@@ -17,6 +17,7 @@ struct Frame{V} <: AbstractFrame{V}
     time::Float64
     box::Box{V, 3, (true,true,true)}
     positions::Vector{V}
+    velocities::Vector{V}
 end
 
 Base.eltype(

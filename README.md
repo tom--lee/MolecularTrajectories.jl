@@ -28,6 +28,7 @@ julia> for frame in trajectory
     @show frame.time
     @show frame.box
     @show frame.positions[1:10]
+    @show frame.velocities[1:10]
 end
 ```
 
