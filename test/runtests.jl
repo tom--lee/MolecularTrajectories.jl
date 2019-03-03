@@ -2,6 +2,7 @@
 using StaticArrays
 using MolecularBoxes
 using MolecularTrajectories
+using MolecularTopologies
 using Test
 
 const Vec = SVector{3,Float64}
@@ -56,3 +57,19 @@ for (i,a_frame) in enumerate(gro)
     @test a_frame.positions[1] == Vec(0.071, 8.301, 0.000)
     @test a_frame.velocities[3489] == Vec(0.0853, 0.6458, 0.2153)
 end
+
+let gro = GroTrajectory{Vec}(grofile)
+    topology = open(gro_topology, grofile)
+    frame = first(gro)
+    buffer = PipeBuffer()
+    write_frame(buffer, GroTrajectory, frame, topology, "1941 deposited molecules")
+    result = String(take!(buffer))
+    open("test_result.gro", "w") do f
+        print(f,result)
+    end
+    expected = String(open(read, grofile))
+    compare = (result==expected)
+    @test compare == true
+end
+
+

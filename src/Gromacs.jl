@@ -1,6 +1,8 @@
 
 #export XTC, GroBox
-export GroTrajectory
+export GroTrajectory, write_frame
+
+using Base.Printf
 
 include("XTC_JB.jl")
 
@@ -93,5 +95,35 @@ function Base.iterate(gro::GroTrajectory{V}, state=0) where V
             )
         end
     end
+end
+
+function write_frame(output, format::Type{GroTrajectory}, frame, topology, comment="")
+    println(output, comment)
+    pos = frame.positions
+    vel = if size(frame.velocities) == size(pos)
+        frame.velocities
+    else
+        zeros(eltype(pos), size(pos))
+    end
+    t = topology
+    println(output, length(pos))
+    for i in eachindex(pos)
+        Printf.@printf(
+            output,
+            "%5d%-5s%5s%5d%8.3f%8.3f%8.3f%8.4f%8.4f%8.4f\n",
+            t.residue_indices[i],
+            t.residue_names[i],
+            t.atom_names[i],
+            i,
+            pos[i][1],
+            pos[i][2],
+            pos[i][3],
+            vel[i][1],
+            vel[i][2],
+            vel[i][3],
+        )
+    end
+    Lx,Ly,Lz = frame.box.lengths
+    Printf.@printf output "%10.5f %9.5f %9.5f\n" Lx Ly Lz
 end
 
