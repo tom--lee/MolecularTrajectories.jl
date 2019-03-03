@@ -35,11 +35,11 @@ end
 
 julia> using MolecularTopologies
 
-julia> topology = open(gro_topology, gro_paths)
+julia> topology = open(gro_topology, gro_path)
 
 julia> frame = first(GroTrajectory{Vec}(gro_paths, dt=1.0))
 
-julia> open("output.gro") do g
+julia> open("output.gro", "w") do g
     write_frame(g, GroTrajectory, frame, topology, "Some gro file")
 end
 
