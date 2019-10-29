@@ -27,5 +27,7 @@ Base.eltype(
 get_num_atoms(f::Frame) = size(f.positions,1)
 
 include("Gromacs.jl")
+include("pdb.jl")
+include("simdiffraction.jl")
 
 end
