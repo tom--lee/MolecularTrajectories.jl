@@ -68,8 +68,9 @@ let gro = GroTrajectory{Vec}(grofile)
         print(f,result)
     end
     expected = String(open(read, grofile))
-    compare = (result==expected)
-    @test compare == true
+    @test result==expected
+    #@compare = (result==expected)
+    #@test compare == true
 end
 
 
