@@ -67,7 +67,7 @@ let gro = GroTrajectory{Vec}(grofile)
     open("test_result.gro", "w") do f
         print(f,result)
     end
-    expected = String(open(read, grofile))
+    expected = replace(String(open(read, grofile)), "\r\n"=>"\n") #replace required for windows
     compare = (result==expected)
     @test compare == true
 end
