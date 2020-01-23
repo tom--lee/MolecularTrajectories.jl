@@ -2,7 +2,7 @@
 #export XTC, GroBox
 export GroTrajectory, write_frame
 
-using Base.Printf
+using Printf
 
 include("XTC_JB.jl")
 
